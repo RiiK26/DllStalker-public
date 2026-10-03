@@ -24,9 +24,49 @@ sequenceDiagram
     Proxy->>Proxy: DllMain then Unity bind, optional GUI
 ```
 
+## About the fork
 
+> **Note**: This repository is a fork of the original [DllStalker](https://github.com/OttoTre/DllStalker-public) project. It introduces an MCP server to interface via stdio command.
+
+### MCP Integration
+
+#### Prerequisites
+
+- Python 3.10 or later.
+- Required Python dependencies:
+  ```bash
+  pip install mcp pywin32
+  ```
+
+#### Setup & Configuration
+
+1. Ensure the game is running with the `version.dll` proxy injected, see [**Deploy**](#deploy).
+2. Configure your MCP client (e.g., Claude Code, Cursor, or any MCP-compatible IDE/CLI) to connect to the server by adding the following to your MCP configuration file:
+   ```json
+   {
+     "mcpServers": {
+       "dllstalker": {
+         "command": "python",
+         "args": ["/path/to/DllStalker-public/python/mcp_dllstalker.py"]
+       }
+     }
+   }
+   ```
+
+### Features
+
+The MCP server connects to the DllStalker runtime over Windows Named Pipes (or TCP fallback) and exposes tools to:
+- Find Unity assemblies and images (`find_image`, `get_all_images`).
+- Introspect classes, methods, fields, and enums (`get_classes`, `get_methods`, `get_fields`, `get_enum_literals`).
+- Read and write memory (`read_i32`, `write_i32`, `read_f32`, `write_f32`, `read_pointer`, `read_string`).
+- Invoke C# methods dynamically (`invoke_method`).
+- Resolve addresses and offsets (`get_method_address`, `get_field_offset`).
+
+This allows automated analysis and scripting from outside the game process via MCP.
 
 ## Deploy
+
+### Windows
 
 1. Copy the DLL next to the game `.exe`.
    1. Take the **DebugRelease|x64** build from [Artifacts](https://github.com/OttoTre/DllStalker-public/releases) or compile it yourself locally (see **Build configs**).
@@ -38,6 +78,15 @@ sequenceDiagram
    1. It opens as a separate desktop window, not an in-game overlay.
    2. Click **Init Dumper Engine**. The **System log** on that screen is bootstrap output only; it is not shown after init.
    3. Closing the control panel does not quit the game.
+
+### Linux (Proton / Wine)
+
+Since this is a Windows DLL, it must run through Wine/Proton.
+1. Follow steps 1 and 2 from the Windows deployment above.
+2. You must configure Wine to load your local `version.dll` instead of its built-in one.
+   - **Steam (Proton):** Add `WINEDLLOVERRIDES="version=n,b" %command%` to the game's Launch Options.
+   - **Lutris / Wine:** Add an environment variable `WINEDLLOVERRIDES` with the value `version=n,b`, or configure it in `winecfg` under the Libraries tab.
+3. Launch the game. The Control Panel UI (if enabled) will render as a separate Wine window.
 
 Runtime files live next to the proxy under `stalker_runtime/` (`mods/` for scripts, `session/` for bookmark and watch recipes). **Release** also writes `stalker_runtime/dllstalker.log`.
 

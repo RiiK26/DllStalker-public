@@ -10,6 +10,7 @@
       ]
     },
     "minhook",
-    "luajit"
+    "luajit",
+    "nlohmann-json"
   ]
 }

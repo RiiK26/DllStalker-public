@@ -279,6 +279,7 @@
     <ClInclude Include="include\gui\window.h" />
     <ClInclude Include="include\services\application_quit_hook.h" />
     <ClInclude Include="include\services\bootstrap_log.h" />
+    <ClInclude Include="include\services\mcp_server.h" />
     <ClInclude Include="include\services\module_path.h" />
     <ClInclude Include="include\services\hook_installer.h" />
     <ClInclude Include="include\services\call_log_types.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="src\gui\window.cpp" />
     <ClCompile Include="src\services\application_quit_hook.cpp" />
     <ClCompile Include="src\services\bootstrap_log.cpp" />
+    <ClCompile Include="src\services\mcp_server.cpp" />
     <ClCompile Include="src\services\module_path.cpp" />
     <ClCompile Include="src\services\hook_installer.cpp" />
     <ClCompile Include="src\services\call_log_types.cpp" />

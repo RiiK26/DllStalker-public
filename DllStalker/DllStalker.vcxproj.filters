@@ -264,6 +264,9 @@
     <ClInclude Include="include\services\bootstrap_log.h">
       <Filter>Pliki nagłówkowe\services</Filter>
     </ClInclude>
+    <ClInclude Include="include\services\mcp_server.h">
+      <Filter>Pliki nagłówkowe\services</Filter>
+    </ClInclude>
     <ClInclude Include="include\services\module_path.h">
       <Filter>Pliki nagłówkowe\services</Filter>
     </ClInclude>
@@ -651,6 +654,9 @@
       <Filter>Pliki źródłowe\services</Filter>
     </ClCompile>
     <ClCompile Include="src\services\bootstrap_log.cpp">
+      <Filter>Pliki źródłowe\services</Filter>
+    </ClCompile>
+    <ClCompile Include="src\services\mcp_server.cpp">
       <Filter>Pliki źródłowe\services</Filter>
     </ClCompile>
     <ClCompile Include="src\services\module_path.cpp">
